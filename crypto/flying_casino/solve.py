@@ -3,8 +3,12 @@ import re, random, sys
 
 context.log_level = 'error'
 
-HOST = '10.21.232.223'
-PORT = 42264
+if len(sys.argv) < 3:
+    print("Usage: python3 solve.py <HOST> <PORT>")
+    sys.exit(1)
+
+HOST = sys.argv[1]
+PORT = int(sys.argv[2])
 
 CASINO_WIN = int.from_bytes(b"You've been pwned", 'big')
 print(f"[*] Target: wallet > {CASINO_WIN}")
