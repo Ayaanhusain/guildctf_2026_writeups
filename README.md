@@ -684,7 +684,4 @@ guildctf_2026_writeups/
 
 ---
 
-## Notes
 
-- Each solve script has a header docstring explaining the challenge and how to run it.
-- Only fully solved challenges are included. A partially-attempted web challenge (CVE's galore) is documented in the application PDF but not included here, since the exploit chain did not complete end-to-end.
