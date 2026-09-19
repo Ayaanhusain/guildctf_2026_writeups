@@ -1,1 +1,18 @@
+GuildCTF 2026 — "EAassyy Stufff"
+Category: Misc
+Challenge Flag: exploiitm{7urns_0uT_kRlshItH_wA5_wR0nG}
 
+The remote service evaluates arbitrary Python expressions. We confirmed
+this by sending a bare string ("hello") which was echoed back, and by
+sending __import__('os') which returned <module 'os' (frozen)>. The
+service was launched via netcat:
+
+    nc 10.21.232.223 <PORT>
+
+Once unfiltered access to the os module was confirmed, the following
+single expression was sent to execute a shell command server-side and
+return its output:
+
+    __import__('os').popen('cat flag.txt').read()
+
+The server returned the contents of flag.txt, which was the flag.
